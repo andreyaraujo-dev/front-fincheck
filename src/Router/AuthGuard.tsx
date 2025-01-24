@@ -1,4 +1,4 @@
-import {Navigate, Outlet} from "react-router-dom";
+import { Navigate, Outlet } from 'react-router-dom';
 
 interface AuthGuardProps {
   isPrivate: boolean;
@@ -15,5 +15,5 @@ export function AuthGuard({ isPrivate }: AuthGuardProps) {
     return <Navigate to="/" replace />;
   }
 
-  return <Outlet />
+  return <Outlet />;
 }

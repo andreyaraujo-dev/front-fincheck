@@ -1,9 +1,9 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {AuthGuard} from "./AuthGuard.tsx";
-import {Login} from "../view/pages/Login";
-import {Register} from "../view/pages/Register";
-import {Dashboard} from "../view/pages/Dashboard";
-import {AuthLayout} from "../view/layouts/AuthLayout.tsx";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthGuard } from './AuthGuard.tsx';
+import { Login } from '../view/pages/Login';
+import { Register } from '../view/pages/Register';
+import { Dashboard } from '../view/pages/Dashboard';
+import { AuthLayout } from '../view/layouts/AuthLayout.tsx';
 
 export function Router() {
   return (
@@ -21,5 +21,5 @@ export function Router() {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
