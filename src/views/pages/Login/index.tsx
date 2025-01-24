@@ -1,3 +1,7 @@
 export function Login() {
-  return <h1>Login</h1>;
+  return (
+    <div className="w-full h-14 flex items-center justify-center">
+      <h1 className="font-bold">Login</h1>
+    </div>
+  );
 }

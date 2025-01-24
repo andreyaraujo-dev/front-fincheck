@@ -5,10 +5,11 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/views*": ["./src/views/*"],
-      "@/app*": ["./src/app/*"]
+      "@/views/*": ["./src/views/*"],
+      "@/app/*": ["./src/app/*"]
     }
   },
   "exclude": ["node_modules"]
