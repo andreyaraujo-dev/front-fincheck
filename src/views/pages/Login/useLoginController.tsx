@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '@/app/services/authService';
-import { useToast } from '@/hooks/use-toast.ts';
+import { useToast } from '@/app/hooks/useToast.ts';
 import { SigninParams } from '@/app/services/authService/signin.ts';
 
 const schema = z.object({

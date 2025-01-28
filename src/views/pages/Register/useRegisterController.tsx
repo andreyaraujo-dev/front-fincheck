@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { authService } from '@/app/services/authService';
 import { useMutation } from '@tanstack/react-query';
 import { SignupParams } from '@/app/services/authService/signup.ts';
-import { useToast } from '@/hooks/use-toast.ts';
+import { useToast } from '@/app/hooks/useToast.ts';
 
 const schema = z.object({
   name: z.string().nonempty('Nome é obrigatório'),
