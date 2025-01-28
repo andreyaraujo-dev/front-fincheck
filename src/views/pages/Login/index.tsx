@@ -4,7 +4,7 @@ import { Button } from '@/views/components/ui/button.tsx';
 import { useLoginController } from '@/views/pages/Login/useLoginController.tsx';
 
 export function Login() {
-  const { handleSubmit, register, errors } = useLoginController();
+  const { handleSubmit, register, errors, isPending } = useLoginController();
 
   return (
     <div className="flex flex-col items-center justify-center gap-12">
@@ -33,7 +33,7 @@ export function Login() {
           error={errors.password?.message}
         />
 
-        <Button type="submit" className="rounded-[16px] mt-2">
+        <Button type="submit" className="rounded-[16px] mt-2" isLoading={isPending}>
           Entrar
         </Button>
       </form>
