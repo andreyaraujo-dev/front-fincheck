@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { authService } from '@/app/services/authService';
 import { useToast } from '@/app/hooks/useToast.ts';
 import { SigninParams } from '@/app/services/authService/signin.ts';
+import { useAuth } from '@/app/hooks/useAuth.ts';
 
 const schema = z.object({
   email: z.string().nonempty('E-mail é obrigatório').email('Informe um e-mail válido'),
@@ -34,12 +35,14 @@ export function useLoginController() {
 
   const { toast } = useToast();
 
+  const { signin } = useAuth();
+
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-      await mutateAsync(data);
-    } catch (error) {
+      const { accessToken } = await mutateAsync(data);
+      signin(accessToken);
+    } catch {
       toast({ title: 'Erro', description: 'Credenciais inválidas, tente novamente.' });
-      console.error(error);
     }
   });
 

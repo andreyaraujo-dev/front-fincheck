@@ -7,7 +7,7 @@ export interface SignupParams {
 }
 
 export interface SignupResponse {
-  access_token: string;
+  accessToken: string;
 }
 
 export async function signup({ name, email, password }: SignupParams) {

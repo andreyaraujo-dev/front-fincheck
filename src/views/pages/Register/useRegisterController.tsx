@@ -5,6 +5,7 @@ import { authService } from '@/app/services/authService';
 import { useMutation } from '@tanstack/react-query';
 import { SignupParams } from '@/app/services/authService/signup.ts';
 import { useToast } from '@/app/hooks/useToast.ts';
+import { useAuth } from '@/app/hooks/useAuth.ts';
 
 const schema = z.object({
   name: z.string().nonempty('Nome é obrigatório'),
@@ -35,14 +36,17 @@ export function useRegisterController() {
 
   const { toast } = useToast();
 
+  const { signin } = useAuth();
+
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
-      const responseData = await mutateAsync(data);
-      console.log(responseData);
+      const { accessToken } = await mutateAsync(data);
+
+      signin(accessToken);
+
       toast({ title: 'Sucesso', description: 'Cadastro realizado com sucesso!' });
-    } catch (error) {
+    } catch {
       toast({ title: 'Erro', description: 'Não foi possível realizar o cadastro.' });
-      console.error(error);
     }
   });
 
