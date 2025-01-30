@@ -3,7 +3,7 @@ import 'swiper/css';
 
 import { EyeIcon } from '@/views/components/icons/EyeIcon.tsx';
 import { AccountCard } from '@/views/pages/Dashboard/components/Accounts/AccountCard.tsx';
-import { AccountsSliderNavigation } from '@/views/pages/Dashboard/components/Accounts/AccountsSliderNavigation.tsx';
+import { SliderNavigation } from '@/views/pages/Dashboard/components/Accounts/SliderNavigation.tsx';
 import { useAccountsController } from '@/views/pages/Dashboard/components/Accounts/useAccountsController.ts';
 import { useWindowWidth } from '@/app/hooks/useWindowWidth.ts';
 
@@ -40,10 +40,7 @@ export function Accounts() {
                 Minhas contas
               </strong>
 
-              <AccountsSliderNavigation
-                isBeginning={sliderState.isBeginning}
-                isEnd={sliderState.isEnd}
-              />
+              <SliderNavigation isBeginning={sliderState.isBeginning} isEnd={sliderState.isEnd} />
             </div>
 
             <SwiperSlide>
