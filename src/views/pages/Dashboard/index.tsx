@@ -1,7 +1,7 @@
 import { Logo } from '@/views/components/Logo';
 import { UserMenu } from '@/views/components/UserMenu';
-import { Accounts } from '@/views/pages/Dashboard/components/Accounts.tsx';
-import { Transactions } from '@/views/pages/Dashboard/components/Transactions.tsx';
+import { Accounts } from '@/views/pages/Dashboard/components/Accounts';
+import { Transactions } from '@/views/pages/Dashboard/components/Transactions';
 
 export function Dashboard() {
   return (
