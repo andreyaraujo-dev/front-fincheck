@@ -3,6 +3,7 @@ import { UserMenu } from '@/views/components/UserMenu';
 import { Accounts } from '@/views/pages/Dashboard/components/Accounts';
 import { Transactions } from '@/views/pages/Dashboard/components/Transactions';
 import { DashboardProvider } from '@/app/context/useDashboardContext.tsx';
+import { Fab } from '@/views/pages/Dashboard/components/Fab';
 
 export function Dashboard() {
   return (
@@ -21,6 +22,8 @@ export function Dashboard() {
             <Transactions />
           </div>
         </main>
+
+        <Fab />
       </div>
     </DashboardProvider>
   );

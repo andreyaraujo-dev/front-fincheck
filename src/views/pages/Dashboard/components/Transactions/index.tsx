@@ -1,5 +1,3 @@
-import { TransactionsIcon } from '@/views/components/icons/TransactionsIcon.tsx';
-import { ChevronDownIcon } from 'lucide-react';
 import { FilterIcon } from '@/views/components/icons/FilterIcon.tsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MONTHS } from '@/app/config/constants.ts';
@@ -11,10 +9,17 @@ import { cn } from '@/lib/utils.ts';
 import { useTransactionsController } from '@/views/pages/Dashboard/components/Transactions/useTransactionsController.ts';
 import { Spinner } from '@/views/components/Loading/Spinner';
 import emptyState from '@/assets/empty-state.svg';
+import { TransactionTypeDropdown } from '@/views/pages/Dashboard/components/Transactions/TransactionTypeDropdown.tsx';
 
 export function Transactions() {
-  const { areValuesVisible, isInitialLoading, transactions, isLoading } =
-    useTransactionsController();
+  const {
+    areValuesVisible,
+    isInitialLoading,
+    transactions,
+    isLoading,
+    handleChangeFilters,
+    filters,
+  } = useTransactionsController();
 
   const hasTransactions = transactions?.length > 0;
 
@@ -30,14 +35,10 @@ export function Transactions() {
         <>
           <header>
             <div className="flex justify-between items-center">
-              <button type="button" className="flex items-center gap-2">
-                <TransactionsIcon />
-                <span className="text-sm text-gray-800 tracking-[-0.5px] font-medium">
-                  Transações
-                </span>
-                <ChevronDownIcon className="text-gray-900" />
-              </button>
-
+              <TransactionTypeDropdown
+                onSelect={handleChangeFilters('type')}
+                selectedType={filters.type}
+              />
               <button type="button">
                 <FilterIcon />
               </button>
