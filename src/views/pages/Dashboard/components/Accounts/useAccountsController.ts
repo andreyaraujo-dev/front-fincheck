@@ -9,6 +9,7 @@ export function useAccountsController() {
     isBeginning: true,
     isEnd: false,
   });
+  const isLoading = false;
 
   return {
     sliderState,
@@ -16,5 +17,6 @@ export function useAccountsController() {
     windowWidth,
     areValuesVisible,
     toggleValuesVisibility,
+    isLoading,
   };
 }
