@@ -5,20 +5,29 @@ import { EyeIcon } from '@/views/components/icons/EyeIcon.tsx';
 import { AccountCard } from '@/views/pages/Dashboard/components/Accounts/AccountCard.tsx';
 import { SliderNavigation } from '@/views/pages/Dashboard/components/Accounts/SliderNavigation.tsx';
 import { useAccountsController } from '@/views/pages/Dashboard/components/Accounts/useAccountsController.ts';
-import { useWindowWidth } from '@/app/hooks/useWindowWidth.ts';
+import { formatCurrency } from '@/app/utils/formatCurrency.ts';
+import { cn } from '@/lib/utils.ts';
 
 export function Accounts() {
-  const { sliderState, setSliderState } = useAccountsController();
-  const windowWidth = useWindowWidth();
+  const { sliderState, setSliderState, windowWidth, areValuesVisible, toggleValuesVisibility } =
+    useAccountsController();
 
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
       <div>
         <span className="tracking-[-0.5px] text-white block">Saldo total</span>
         <div className="flex items-center gap-2">
-          <strong className="text-2xl tracking-[-1px] text-white">R$ 1.000,00</strong>
-          <button type="button" className="w-8 h-8 flex items-center justify-center">
-            <EyeIcon open />
+          <strong
+            className={cn('text-2xl tracking-[-1px] text-white', !areValuesVisible && 'blur-md')}
+          >
+            {formatCurrency(1000)}
+          </strong>
+          <button
+            type="button"
+            className="w-8 h-8 flex items-center justify-center"
+            onClick={toggleValuesVisibility}
+          >
+            <EyeIcon open={!areValuesVisible} />
           </button>
         </div>
       </div>
