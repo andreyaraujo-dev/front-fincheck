@@ -10,6 +10,7 @@ import { useTransactionsController } from '@/views/pages/Dashboard/components/Tr
 import { Spinner } from '@/views/components/Loading/Spinner';
 import emptyState from '@/assets/empty-state.svg';
 import { TransactionTypeDropdown } from '@/views/pages/Dashboard/components/Transactions/TransactionTypeDropdown.tsx';
+import { FiltersModal } from '@/views/pages/Dashboard/components/Modals/FiltersModal';
 
 export function Transactions() {
   const {
@@ -19,6 +20,9 @@ export function Transactions() {
     isLoading,
     handleChangeFilters,
     filters,
+    isFiltersModalOpen,
+    handleOpenFiltersModal,
+    handleCloseFiltersModal,
   } = useTransactionsController();
 
   const hasTransactions = transactions?.length > 0;
@@ -33,13 +37,15 @@ export function Transactions() {
 
       {!isInitialLoading && (
         <>
+          <FiltersModal open={isFiltersModalOpen} onClose={handleCloseFiltersModal} />
+
           <header>
             <div className="flex justify-between items-center">
               <TransactionTypeDropdown
                 onSelect={handleChangeFilters('type')}
                 selectedType={filters.type}
               />
-              <button type="button">
+              <button type="button" onClick={handleOpenFiltersModal}>
                 <FilterIcon />
               </button>
             </div>

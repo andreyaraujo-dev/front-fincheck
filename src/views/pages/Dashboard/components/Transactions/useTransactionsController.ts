@@ -16,6 +16,7 @@ export function useTransactionsController() {
     year: new Date().getFullYear(),
   });
   const isInitialLoading = false;
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
 
   function handleChangeFilters<TFilter extends keyof TransactionsFilters>(filter: TFilter) {
     return (value: TransactionsFilters[TFilter]) => {
@@ -28,6 +29,14 @@ export function useTransactionsController() {
     };
   }
 
+  function handleOpenFiltersModal() {
+    setIsFiltersModalOpen(true);
+  }
+
+  function handleCloseFiltersModal() {
+    setIsFiltersModalOpen(false);
+  }
+
   return {
     areValuesVisible,
     isInitialLoading,
@@ -35,5 +44,8 @@ export function useTransactionsController() {
     transactions: [],
     handleChangeFilters,
     filters,
+    isFiltersModalOpen,
+    handleOpenFiltersModal,
+    handleCloseFiltersModal,
   };
 }
