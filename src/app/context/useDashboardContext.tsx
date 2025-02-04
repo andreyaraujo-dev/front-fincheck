@@ -9,13 +9,15 @@ interface DashboardContextValue {
   isNewAccountModalOpen: boolean;
   isNewTransactionModalOpen: boolean;
   newTransactionType: 'INCOME' | 'EXPENSE' | null;
+  closeNewTransactionModal: () => void;
+  closeNewAccountModal: () => void;
 }
 
 export const DashboardContext = createContext({} as DashboardContextValue);
 
 export function DashboardProvider({ children }: { children: ReactNode }) {
   const [areValuesVisible, setAreValuesVisible] = useState(true);
-  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
+  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(true);
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
   const [newTransactionType, setNewTransactionType] = useState<'INCOME' | 'EXPENSE' | null>(null);
 
@@ -32,6 +34,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setIsNewAccountModalOpen(true);
   }, []);
 
+  const closeNewTransactionModal = useCallback(() => {
+    setNewTransactionType(null);
+    setIsNewTransactionModalOpen(false);
+  }, []);
+
+  const closeNewAccountModal = useCallback(() => {
+    setIsNewAccountModalOpen(false);
+  }, []);
+
   return (
     <DashboardContext.Provider
       value={{
@@ -42,6 +53,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         isNewAccountModalOpen,
         isNewTransactionModalOpen,
         newTransactionType,
+        closeNewAccountModal,
+        closeNewTransactionModal,
       }}
     >
       {children}

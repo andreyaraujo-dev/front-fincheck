@@ -12,7 +12,7 @@ interface ModalProps {
 export function Modal({ open, children, onClose, title, rightAction }: ModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="max-w-[30%]">
         <DialogHeader className="h-12 flex flex-row items-center justify-between text-gray-800">
           <button
             type="button"

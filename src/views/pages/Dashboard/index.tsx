@@ -4,6 +4,7 @@ import { Accounts } from '@/views/pages/Dashboard/components/Accounts';
 import { Transactions } from '@/views/pages/Dashboard/components/Transactions';
 import { DashboardProvider } from '@/app/context/useDashboardContext.tsx';
 import { Fab } from '@/views/pages/Dashboard/components/Fab';
+import { NewAccountModal } from '@/views/pages/Dashboard/components/Modals/NewAccountModal';
 
 export function Dashboard() {
   return (
@@ -24,6 +25,8 @@ export function Dashboard() {
         </main>
 
         <Fab />
+
+        <NewAccountModal />
       </div>
     </DashboardProvider>
   );

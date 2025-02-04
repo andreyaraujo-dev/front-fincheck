@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils';
 
 const Input = React.forwardRef<
   HTMLInputElement,
-  React.ComponentProps<'input'> & { error?: string }
->(({ className, type, placeholder, name, id, error, ...props }, ref) => {
+  React.ComponentProps<'input'> & { error?: string; showErrorMessage?: boolean }
+>(({ className, type, placeholder, name, id, error, showErrorMessage, ...props }, ref) => {
   const inputId = id ?? name;
   return (
     <div className="relative w-full">
@@ -32,7 +32,7 @@ const Input = React.forwardRef<
         {placeholder}
       </label>
 
-      {error && (
+      {error && showErrorMessage && (
         <div className="flex gap-2 items-center mt-2 text-red-900">
           <CrossCircledIcon />
           <span className="text-xs ">{error}</span>
