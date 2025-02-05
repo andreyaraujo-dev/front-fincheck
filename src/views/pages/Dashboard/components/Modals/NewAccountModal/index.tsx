@@ -70,7 +70,6 @@ export function NewAccountModal() {
             <FormField
               control={form.control}
               name="type"
-              defaultValue="CHECKING"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

@@ -7,7 +7,7 @@ import { useToast } from '@/app/hooks/useToast.ts';
 const schema = z.object({
   initialBalance: z.string().nonempty('Saldo inicial é obrigatório'),
   name: z.string().nonempty('Nome é obrigatório'),
-  type: z.enum(['CHECKING', 'INVESTMENT', 'CASH']),
+  type: z.enum(['CHECKING', 'INVESTMENT', 'CASH'], { message: 'Tipo de conta é obrigatório' }),
   color: z.string().nonempty('Cor é obrigatória'),
 });
 
@@ -34,7 +34,7 @@ export function useNewAccountModalController() {
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
       console.log(data);
-      toast({ title: 'Sucesso!', description: 'Conta cadastrada com sucesso!' });
+      toast({ title: 'Sucesso!', description: 'Conta cadastrada com sucesso!', duration: 3000 });
       closeNewAccountModal();
       reset();
     } catch {

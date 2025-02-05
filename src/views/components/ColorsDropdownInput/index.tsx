@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ChevronDownIcon, CrossCircledIcon } from '@radix-ui/react-icons';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import {
   DropdownMenuContent,
@@ -84,13 +84,6 @@ export function ColorsDropdownInput({
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {error && (
-        <div className="mt-2 flex gap-2 items-center text-red-900">
-          <CrossCircledIcon />
-          <span className="text-xs">{error}</span>
-        </div>
-      )}
     </div>
   );
 }
