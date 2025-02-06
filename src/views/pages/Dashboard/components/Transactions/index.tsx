@@ -12,6 +12,7 @@ import emptyState from '@/assets/empty-state.svg';
 import { TransactionTypeDropdown } from '@/views/pages/Dashboard/components/Transactions/TransactionTypeDropdown.tsx';
 import { FiltersModal } from '@/views/pages/Dashboard/components/Modals/FiltersModal';
 import { formatDate } from '@/app/utils/formatDate.ts';
+import { EditTransactionModal } from '@/views/pages/Dashboard/components/Modals/EditTransactionModal';
 
 export function Transactions() {
   const {
@@ -25,6 +26,10 @@ export function Transactions() {
     handleOpenFiltersModal,
     handleCloseFiltersModal,
     hasTransactions,
+    handleOpenEditModal,
+    handleCloseEditModal,
+    isEditModalOpen,
+    transactionBeingEdited,
   } = useTransactionsController();
 
   return (
@@ -80,10 +85,21 @@ export function Transactions() {
 
             {hasTransactions && !isLoading && (
               <>
+                {transactionBeingEdited && (
+                  <EditTransactionModal
+                    open={isEditModalOpen}
+                    onClose={handleCloseEditModal}
+                    transaction={transactionBeingEdited}
+                  />
+                )}
+
                 {transactions.map((transaction) => (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
                   <div
                     key={transaction.id}
                     className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
+                    role="button"
+                    onClick={() => handleOpenEditModal(transaction)}
                   >
                     <div className="flex-1 flex items-center gap-3">
                       <CategoryIcon type={transaction.type} category={transaction.category?.icon} />

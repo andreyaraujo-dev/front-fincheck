@@ -12,11 +12,13 @@ export type TransactionsFilters = {
 
 export function useTransactionsController() {
   const { areValuesVisible } = useDashboard();
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [transactionBeingEdited, setTransactionBeingEdited] = useState<Transaction | null>(null);
   const [filters, setFilters] = useState<TransactionsFilters>({
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
   });
-  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
 
   const { transactions, isLoading, isInitialLoading, refetchTransactions } =
     useTransactions(filters);
@@ -56,6 +58,16 @@ export function useTransactionsController() {
     setIsFiltersModalOpen(false);
   }
 
+  function handleOpenEditModal(transaction: Transaction) {
+    setIsEditModalOpen(true);
+    setTransactionBeingEdited(transaction);
+  }
+
+  function handleCloseEditModal() {
+    setIsEditModalOpen(false);
+    setTransactionBeingEdited(null);
+  }
+
   const hasTransactions = transactions.length > 0;
 
   return {
@@ -70,5 +82,9 @@ export function useTransactionsController() {
     handleCloseFiltersModal,
     handleApplyFilters,
     hasTransactions,
+    handleOpenEditModal,
+    handleCloseEditModal,
+    isEditModalOpen,
+    transactionBeingEdited,
   };
 }
