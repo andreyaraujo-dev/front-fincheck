@@ -30,6 +30,7 @@ export function Transactions() {
     handleCloseEditModal,
     isEditModalOpen,
     transactionBeingEdited,
+    handleApplyFilters,
   } = useTransactionsController();
 
   return (
@@ -42,7 +43,11 @@ export function Transactions() {
 
       {!isInitialLoading && (
         <>
-          <FiltersModal open={isFiltersModalOpen} onClose={handleCloseFiltersModal} />
+          <FiltersModal
+            open={isFiltersModalOpen}
+            onClose={handleCloseFiltersModal}
+            onApplyFilters={handleApplyFilters}
+          />
 
           <header>
             <div className="flex justify-between items-center">
@@ -56,7 +61,14 @@ export function Transactions() {
             </div>
 
             <div className="mt-6 relative">
-              <Swiper slidesPerView={3} centeredSlides>
+              <Swiper
+                slidesPerView={3}
+                centeredSlides
+                initialSlide={filters.month}
+                onSlideChange={(swiper) => {
+                  handleChangeFilters('month')(swiper.realIndex);
+                }}
+              >
                 <SliderNavigation />
                 {MONTHS.map((month, index) => (
                   <SwiperSlide key={month}>
