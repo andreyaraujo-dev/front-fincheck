@@ -32,6 +32,12 @@ export function useFiltersModal() {
     });
   }
 
+  function handleClearFilters() {
+    setSelectedBankAccountId(null);
+    setSelectedYear(new Date().getFullYear());
+    setCountSelectedFilters(0);
+  }
+
   return {
     handleSelectBankAccount,
     selectedBankAccountId,
@@ -40,5 +46,6 @@ export function useFiltersModal() {
     accounts,
     handleUpdateCountFilters,
     countSelectedFilters,
+    handleClearFilters,
   };
 }

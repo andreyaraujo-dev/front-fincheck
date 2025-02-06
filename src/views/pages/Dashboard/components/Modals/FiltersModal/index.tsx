@@ -28,6 +28,7 @@ export function FiltersModal({
     accounts,
     handleUpdateCountFilters,
     countSelectedFilters,
+    handleClearFilters,
   } = useFiltersModal();
 
   return (
@@ -41,6 +42,21 @@ export function FiltersModal({
             <FilterIcon />
           </button>
         </NotificationBadge>
+      }
+      rightAction={
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
+        <span
+          role="button"
+          className="text-gray-700 font-medium hover:bg-gray-100 transition-colors px-2 py-1 rounded-2xl"
+          onClick={() => {
+            handleClearFilters();
+            onApplyFilters({
+              year: new Date().getFullYear(),
+            });
+          }}
+        >
+          Limpar
+        </span>
       }
     >
       <div>
