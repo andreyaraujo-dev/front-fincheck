@@ -20,6 +20,9 @@ export function NewTransactionModal() {
     form,
     handleSubmit,
     newTransactionType,
+    accounts,
+    categories,
+    isLoading,
   } = useNewTransactionModalController();
 
   const isExpense = newTransactionType === 'EXPENSE';
@@ -94,7 +97,10 @@ export function NewTransactionModal() {
                       {...field}
                       onChange={field.onChange}
                       value={field.value}
-                      options={[]}
+                      options={categories.map((category) => ({
+                        value: category.id,
+                        label: category.name,
+                      }))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -115,7 +121,10 @@ export function NewTransactionModal() {
                       {...field}
                       onChange={field.onChange}
                       value={field.value}
-                      options={[]}
+                      options={accounts.map((account) => ({
+                        value: account.id,
+                        label: account.name,
+                      }))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -140,7 +149,7 @@ export function NewTransactionModal() {
               )}
             />
 
-            <Button type="submit" className="w-full mt-6" isLoading={false}>
+            <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
               Criar
             </Button>
           </div>

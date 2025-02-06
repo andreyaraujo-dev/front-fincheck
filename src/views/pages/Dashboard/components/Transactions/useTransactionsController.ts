@@ -1,6 +1,7 @@
 import { useDashboard } from '@/app/hooks/useDashboard.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Transaction } from '@/app/entities/Transaction.ts';
+import { useTransactions } from '@/app/hooks/useTransactions.ts';
 
 export type TransactionsFilters = {
   month: number;
@@ -15,8 +16,14 @@ export function useTransactionsController() {
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
   });
-  const isInitialLoading = false;
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
+
+  const { transactions, isLoading, isInitialLoading, refetchTransactions } =
+    useTransactions(filters);
+
+  useEffect(() => {
+    refetchTransactions();
+  }, [filters, refetchTransactions]);
 
   function handleChangeFilters<TFilter extends keyof TransactionsFilters>(filter: TFilter) {
     return (value: TransactionsFilters[TFilter]) => {
@@ -29,6 +36,18 @@ export function useTransactionsController() {
     };
   }
 
+  function handleApplyFilters({
+    bankAccountId,
+    year,
+  }: {
+    bankAccountId: string | undefined;
+    year: number;
+  }) {
+    handleChangeFilters('bankAccountId')(bankAccountId);
+    handleChangeFilters('year')(year);
+    handleCloseFiltersModal();
+  }
+
   function handleOpenFiltersModal() {
     setIsFiltersModalOpen(true);
   }
@@ -37,15 +56,19 @@ export function useTransactionsController() {
     setIsFiltersModalOpen(false);
   }
 
+  const hasTransactions = transactions.length > 0;
+
   return {
     areValuesVisible,
     isInitialLoading,
-    isLoading: false,
-    transactions: [],
+    isLoading,
+    transactions,
     handleChangeFilters,
     filters,
     isFiltersModalOpen,
     handleOpenFiltersModal,
     handleCloseFiltersModal,
+    handleApplyFilters,
+    hasTransactions,
   };
 }

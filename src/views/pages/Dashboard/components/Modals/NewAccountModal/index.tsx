@@ -14,7 +14,7 @@ import { Input } from '@/views/components/ui/input.tsx';
 import { Select } from '@/views/components/Select';
 
 export function NewAccountModal() {
-  const { closeNewAccountModal, isNewAccountModalOpen, form, handleSubmit } =
+  const { closeNewAccountModal, isNewAccountModalOpen, form, handleSubmit, isLoading } =
     useNewAccountModalController();
 
   return (
@@ -119,7 +119,7 @@ export function NewAccountModal() {
               )}
             />
 
-            <Button type="submit" className="w-full mt-6" isLoading={false}>
+            <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
               Criar
             </Button>
           </div>

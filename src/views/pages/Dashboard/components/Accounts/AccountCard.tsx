@@ -2,15 +2,13 @@ import { formatCurrency } from '@/app/utils/formatCurrency.ts';
 import { BankAccountType } from '@/views/components/icons/BankAccountType';
 import { cn } from '@/lib/utils.ts';
 import { useDashboard } from '@/app/hooks/useDashboard.ts';
+import { BankAccount } from '@/app/entities/BankAccount.ts';
 
 interface AccountCardProps {
-  color: string;
-  name: string;
-  balance: number;
-  type: 'CASH' | 'CHECKING' | 'INVESTMENT';
+  data: BankAccount;
 }
 
-export function AccountCard({ name, balance, color, type }: AccountCardProps) {
+export function AccountCard({ data: { color, type, name, currentBalance } }: AccountCardProps) {
   const { areValuesVisible } = useDashboard();
   return (
     <div
@@ -29,7 +27,7 @@ export function AccountCard({ name, balance, color, type }: AccountCardProps) {
             !areValuesVisible && 'blur-sm',
           )}
         >
-          {formatCurrency(balance)}
+          {formatCurrency(currentBalance)}
         </span>
         <small className="text-gray-600 text-sm">Saldo atual</small>
       </div>

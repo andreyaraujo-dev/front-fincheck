@@ -11,6 +11,7 @@ import { Spinner } from '@/views/components/Loading/Spinner';
 import emptyState from '@/assets/empty-state.svg';
 import { TransactionTypeDropdown } from '@/views/pages/Dashboard/components/Transactions/TransactionTypeDropdown.tsx';
 import { FiltersModal } from '@/views/pages/Dashboard/components/Modals/FiltersModal';
+import { formatDate } from '@/app/utils/formatDate.ts';
 
 export function Transactions() {
   const {
@@ -23,9 +24,8 @@ export function Transactions() {
     isFiltersModalOpen,
     handleOpenFiltersModal,
     handleCloseFiltersModal,
+    hasTransactions,
   } = useTransactionsController();
-
-  const hasTransactions = transactions?.length > 0;
 
   return (
     <div className="bg-gray-100 rounded-2xl w-full h-full p-10 flex flex-col">
@@ -80,45 +80,36 @@ export function Transactions() {
 
             {hasTransactions && !isLoading && (
               <>
-                <div className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4">
-                  <div className="flex-1 flex items-center gap-3">
-                    <CategoryIcon type="EXPENSE" />
-
-                    <div>
-                      <strong className="font-bold tracking-[-0.5px] block">Almoço</strong>
-                      <span className="text-sm text-gray-600">04/02/2024</span>
-                    </div>
-                  </div>
-
-                  <span
-                    className={cn(
-                      'text-red-800 tracking-[-0.5px] font-medium',
-                      !areValuesVisible && 'blur-sm',
-                    )}
+                {transactions.map((transaction) => (
+                  <div
+                    key={transaction.id}
+                    className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
                   >
-                    - {formatCurrency(1200)}
-                  </span>
-                </div>
+                    <div className="flex-1 flex items-center gap-3">
+                      <CategoryIcon type={transaction.type} category={transaction.category?.icon} />
 
-                <div className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4">
-                  <div className="flex-1 flex items-center gap-3">
-                    <CategoryIcon type="INCOME" />
-
-                    <div>
-                      <strong className="font-bold tracking-[-0.5px] block">Almoço</strong>
-                      <span className="text-sm text-gray-600">04/02/2024</span>
+                      <div>
+                        <strong className="font-bold tracking-[-0.5px] block">
+                          {transaction.name}
+                        </strong>
+                        <span className="text-sm text-gray-600">
+                          {formatDate(new Date(transaction.date))}
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <span
-                    className={cn(
-                      'text-green-800 tracking-[-0.5px] font-medium',
-                      !areValuesVisible && 'blur-sm',
-                    )}
-                  >
-                    {formatCurrency(1200)}
-                  </span>
-                </div>
+                    <span
+                      className={cn(
+                        'tracking-[-0.5px] font-medium',
+                        transaction.type === 'EXPENSE' ? 'text-red-800' : 'text-green-800',
+                        !areValuesVisible && 'blur-md',
+                      )}
+                    >
+                      {transaction.type === 'EXPENSE' ? '- ' : '+ '}
+                      {formatCurrency(transaction.value)}
+                    </span>
+                  </div>
+                ))}
               </>
             )}
           </div>

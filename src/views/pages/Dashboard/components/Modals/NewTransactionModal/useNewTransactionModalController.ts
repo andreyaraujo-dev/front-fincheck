@@ -3,7 +3,12 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/app/hooks/useToast.ts';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useBankAccounts } from '@/app/hooks/useBankAccounts.ts';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCategories } from '@/app/hooks/useCategories.ts';
+import { transactionsService } from '@/app/services/transactionsService';
+import { currencyStringToNumber } from '@/app/utils/currencyStringToNumber.ts';
 
 const schema = z.object({
   value: z.union([z.string().nonempty('Informe o valor'), z.number()]).transform((val, ctx) => {
@@ -40,9 +45,26 @@ export function useNewTransactionModalController() {
 
   const { handleSubmit: hookFormSubmit } = form;
 
+  const { accounts } = useBankAccounts();
+  const queryClient = useQueryClient();
+  const { categories: categoriesList } = useCategories();
+  const { isPending, mutateAsync } = useMutation({
+    mutationKey: ['createCategories'],
+    mutationFn: transactionsService.create,
+  });
+
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-      console.log(data);
+      await mutateAsync({
+        ...data,
+        value: currencyStringToNumber(data.value),
+        type: newTransactionType!,
+        date: data.date.toISOString(),
+      });
+
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['bankAccounts'] });
+
       toast({
         title: 'Sucesso!',
         description:
@@ -69,11 +91,19 @@ export function useNewTransactionModalController() {
     form.reset();
   }, [isNewTransactionModalOpen]);
 
+  const categories = useMemo(
+    () => categoriesList.filter((category) => category.type === newTransactionType),
+    [categoriesList, newTransactionType],
+  );
+
   return {
     isNewTransactionModalOpen,
     closeNewTransactionModal,
     newTransactionType,
     form,
     handleSubmit,
+    categories,
+    isLoading: isPending,
+    accounts,
   };
 }
