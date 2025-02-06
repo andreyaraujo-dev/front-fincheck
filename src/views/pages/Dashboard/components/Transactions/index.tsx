@@ -1,4 +1,3 @@
-import { FilterIcon } from '@/views/components/icons/FilterIcon.tsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MONTHS } from '@/app/config/constants.ts';
 import { SliderOption } from '@/views/pages/Dashboard/components/Transactions/SliderOption.tsx';
@@ -43,21 +42,18 @@ export function Transactions() {
 
       {!isInitialLoading && (
         <>
-          <FiltersModal
-            open={isFiltersModalOpen}
-            onClose={handleCloseFiltersModal}
-            onApplyFilters={handleApplyFilters}
-          />
-
           <header>
             <div className="flex justify-between items-center">
               <TransactionTypeDropdown
                 onSelect={handleChangeFilters('type')}
                 selectedType={filters.type}
               />
-              <button type="button" onClick={handleOpenFiltersModal}>
-                <FilterIcon />
-              </button>
+              <FiltersModal
+                open={isFiltersModalOpen}
+                onClose={handleCloseFiltersModal}
+                onApplyFilters={handleApplyFilters}
+                handleOpenFiltersModal={handleOpenFiltersModal}
+              />
             </div>
 
             <div className="mt-6 relative">

@@ -4,6 +4,7 @@ import { useBankAccounts } from '@/app/hooks/useBankAccounts.ts';
 export function useFiltersModal() {
   const [selectedBankAccountId, setSelectedBankAccountId] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [countSelectedFilters, setCountSelectedFilters] = useState<number>(0);
 
   const { accounts } = useBankAccounts();
 
@@ -15,11 +16,29 @@ export function useFiltersModal() {
     setSelectedYear((prevState) => prevState + step);
   }
 
+  function handleUpdateCountFilters() {
+    setCountSelectedFilters(() => {
+      let newState = 0;
+      const hasYearBeenChanged = new Date().getFullYear() !== selectedYear;
+      if (hasYearBeenChanged) {
+        newState += 1;
+      }
+
+      if (selectedBankAccountId) {
+        newState += 1;
+      }
+
+      return newState;
+    });
+  }
+
   return {
     handleSelectBankAccount,
     selectedBankAccountId,
     selectedYear,
     handleChangeYear,
     accounts,
+    handleUpdateCountFilters,
+    countSelectedFilters,
   };
 }

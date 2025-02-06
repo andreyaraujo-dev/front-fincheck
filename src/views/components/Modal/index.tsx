@@ -7,11 +7,13 @@ interface ModalProps {
   title: string;
   children: React.ReactNode;
   rightAction?: React.ReactNode;
+  trigger?: React.ReactNode;
 }
 
-export function Modal({ open, children, onClose, title, rightAction }: ModalProps) {
+export function Modal({ open, children, onClose, title, rightAction, trigger }: ModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
+      {trigger}
       <DialogContent className="max-w-[30%]">
         <DialogHeader className="h-12 flex flex-row items-center justify-between text-gray-800">
           <button

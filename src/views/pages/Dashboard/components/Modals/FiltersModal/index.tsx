@@ -1,26 +1,48 @@
+/* eslint-disable no-unused-vars */
 import { Modal } from '@/views/components/Modal';
 import { Button } from '@/views/components/ui/button.tsx';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useFiltersModal } from '@/views/pages/Dashboard/components/Modals/FiltersModal/useFiltersModal.ts';
 import { cn } from '@/lib/utils.ts';
+import { FilterIcon } from '@/views/components/icons/FilterIcon.tsx';
+import { NotificationBadge } from '@/views/components/ui/notification-badge.tsx';
 
 interface FiltersModalProps {
   open: boolean;
   onClose?: () => void;
   onApplyFilters(filters: { bankAccountId?: string | undefined; year: number }): void;
+  handleOpenFiltersModal: () => void;
 }
 
-export function FiltersModal({ open, onClose, onApplyFilters }: FiltersModalProps) {
+export function FiltersModal({
+  open,
+  onClose,
+  onApplyFilters,
+  handleOpenFiltersModal,
+}: FiltersModalProps) {
   const {
     selectedBankAccountId,
     handleSelectBankAccount,
     selectedYear,
     handleChangeYear,
     accounts,
+    handleUpdateCountFilters,
+    countSelectedFilters,
   } = useFiltersModal();
 
   return (
-    <Modal open={open} title="Filtros" onClose={onClose}>
+    <Modal
+      open={open}
+      title="Filtros"
+      onClose={onClose}
+      trigger={
+        <NotificationBadge label={countSelectedFilters} show={countSelectedFilters > 0}>
+          <button type="button" onClick={handleOpenFiltersModal}>
+            <FilterIcon />
+          </button>
+        </NotificationBadge>
+      }
+    >
       <div>
         <span className="text-lg trackinh-[-1px] font-bold text-gray-800">Conta</span>
 
@@ -67,12 +89,13 @@ export function FiltersModal({ open, onClose, onApplyFilters }: FiltersModalProp
       </div>
 
       <Button
-        onClick={() =>
+        onClick={() => {
           onApplyFilters({
             bankAccountId: selectedBankAccountId || undefined,
             year: selectedYear,
-          })
-        }
+          });
+          handleUpdateCountFilters();
+        }}
       >
         Aplicar Filtros
       </Button>
