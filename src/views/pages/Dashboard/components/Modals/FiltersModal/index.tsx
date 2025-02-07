@@ -29,6 +29,7 @@ export function FiltersModal({
     handleUpdateCountFilters,
     countSelectedFilters,
     handleClearFilters,
+    openNewAccountModal,
   } = useFiltersModal();
 
   return (
@@ -63,20 +64,30 @@ export function FiltersModal({
         <span className="text-lg trackinh-[-1px] font-bold text-gray-800">Conta</span>
 
         <div className="space-y-2 mt-2">
-          {accounts.map((account) => (
-            <Button
-              key={account.id}
-              variant="secondary"
-              type="button"
-              className={cn(
-                'rounded-2xl justify-start text-left tet-gray-800 bg-transparent shadow-none font-normal',
-                account.id === selectedBankAccountId && '!bg-gray-200',
-              )}
-              onClick={() => handleSelectBankAccount(account.id)}
-            >
-              {account.name}
-            </Button>
-          ))}
+          {accounts.length > 0 ? (
+            accounts.map((account) => (
+              <Button
+                key={account.id}
+                variant="secondary"
+                type="button"
+                className={cn(
+                  'rounded-2xl justify-start text-left tet-gray-800 bg-transparent shadow-none font-normal',
+                  account.id === selectedBankAccountId && '!bg-gray-200',
+                )}
+                onClick={() => handleSelectBankAccount(account.id)}
+              >
+                {account.name}
+              </Button>
+            ))
+          ) : (
+            <span className="text-sm text-gray-600">
+              Nenhuma conta cadastrada. Cadastre uma{' '}
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+              <span className="underline cursor-pointer" onClick={openNewAccountModal}>
+                aqui.
+              </span>
+            </span>
+          )}
         </div>
       </div>
 

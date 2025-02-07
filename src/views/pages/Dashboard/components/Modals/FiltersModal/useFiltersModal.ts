@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useBankAccounts } from '@/app/hooks/useBankAccounts.ts';
+import { useDashboard } from '@/app/hooks/useDashboard.ts';
 
 export function useFiltersModal() {
   const [selectedBankAccountId, setSelectedBankAccountId] = useState<string | null>(null);
@@ -7,6 +8,8 @@ export function useFiltersModal() {
   const [countSelectedFilters, setCountSelectedFilters] = useState<number>(0);
 
   const { accounts } = useBankAccounts();
+
+  const { openNewAccountModal } = useDashboard();
 
   function handleSelectBankAccount(bankAccountId: string) {
     setSelectedBankAccountId((prevState) => (prevState === bankAccountId ? null : bankAccountId));
@@ -47,5 +50,6 @@ export function useFiltersModal() {
     handleUpdateCountFilters,
     countSelectedFilters,
     handleClearFilters,
+    openNewAccountModal,
   };
 }

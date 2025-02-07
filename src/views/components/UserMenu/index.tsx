@@ -2,21 +2,29 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/views/components/ui/dropdown-menu.tsx';
 import { useAuth } from '@/app/hooks/useAuth.ts';
 import { ExitIcon } from '@radix-ui/react-icons';
 
 export function UserMenu() {
-  const { signout } = useAuth();
+  const { signout, user } = useAuth();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="bg-teal-50 rounded-full w-12 h-12 flex items-center justify-center border border-teal-100 outline-none">
-        <span className="text-sm tracking-[-0.5px] text-teal-900 font-medium">AA</span>
+        <span className="text-sm tracking-[-0.5px] text-teal-900 font-medium">
+          {user?.name.slice(0, 2).toUpperCase()}
+        </span>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
+        <DropdownMenuLabel className="text-xs text-gray-600">Olá, {user?.name}</DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
         <DropdownMenuItem
           onSelect={signout}
           className="flex items-center justify-between font-medium"
