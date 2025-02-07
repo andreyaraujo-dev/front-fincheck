@@ -12,6 +12,7 @@ import { TransactionTypeDropdown } from '@/views/pages/Dashboard/components/Tran
 import { FiltersModal } from '@/views/pages/Dashboard/components/Modals/FiltersModal';
 import { formatDate } from '@/app/utils/formatDate.ts';
 import { EditTransactionModal } from '@/views/pages/Dashboard/components/Modals/EditTransactionModal';
+import { TotalTransactions } from '@/views/pages/Dashboard/components/Transactions/TotalTransactions.tsx';
 
 export function Transactions() {
   const {
@@ -30,10 +31,12 @@ export function Transactions() {
     isEditModalOpen,
     transactionBeingEdited,
     handleApplyFilters,
+    totalIncome,
+    totalExpenses,
   } = useTransactionsController();
 
   return (
-    <div className="bg-gray-100 rounded-2xl w-full h-full p-10 flex flex-col">
+    <div className="bg-gray-100 rounded-2xl w-full h-full px-10 pt-10 pb-2 flex flex-col">
       {isInitialLoading && (
         <div className="flex items-center justify-center h-full w-full">
           <Spinner className="w-10 h-10" />
@@ -76,7 +79,6 @@ export function Transactions() {
               </Swiper>
             </div>
           </header>
-
           <div className="mt-4 space-y-2 flex-1 overflow-y-auto">
             {isLoading && (
               <div className="flex flex-col items-center h-full justify-center">
@@ -137,6 +139,15 @@ export function Transactions() {
               </>
             )}
           </div>
+
+          {hasTransactions && !isLoading && (
+            <TotalTransactions
+              filtersType={filters.type}
+              areValuesVisible={areValuesVisible}
+              totalIncome={totalIncome}
+              totalExpense={totalExpenses}
+            />
+          )}
         </>
       )}
     </div>

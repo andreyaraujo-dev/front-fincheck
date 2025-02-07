@@ -1,5 +1,5 @@
 import { useDashboard } from '@/app/hooks/useDashboard.ts';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Transaction } from '@/app/entities/Transaction.ts';
 import { useTransactions } from '@/app/hooks/useTransactions.ts';
 
@@ -70,6 +70,24 @@ export function useTransactionsController() {
 
   const hasTransactions = transactions.length > 0;
 
+  const totalExpenses = useMemo(() => {
+    return transactions.reduce((total, transaction) => {
+      if (transaction.type === 'EXPENSE') {
+        return total + transaction.value;
+      }
+      return total;
+    }, 0);
+  }, [transactions]);
+
+  const totalIncome = useMemo(() => {
+    return transactions.reduce((total, transaction) => {
+      if (transaction.type === 'INCOME') {
+        return total + transaction.value;
+      }
+      return total;
+    }, 0);
+  }, [transactions]);
+
   return {
     areValuesVisible,
     isInitialLoading,
@@ -86,5 +104,7 @@ export function useTransactionsController() {
     handleCloseEditModal,
     isEditModalOpen,
     transactionBeingEdited,
+    totalIncome,
+    totalExpenses,
   };
 }

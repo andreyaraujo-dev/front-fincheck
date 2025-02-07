@@ -19,12 +19,12 @@ export function Dashboard() {
               <UserMenu />
             </header>
 
-            <main className="flex-1 flex flex-col lg:flex-row gap-4 max-h-full">
+            <main className="flex-1 flex flex-col lg:flex-row gap-4 max-h-[90%]">
               <div className="w-full lg:w-1/2">
                 <Accounts />
               </div>
 
-              <div className="w-full lg:w-1/2">
+              <div className="w-full max-h-full lg:w-1/2">
                 <Transactions />
               </div>
             </main>

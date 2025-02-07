@@ -39,7 +39,7 @@ export function Accounts() {
               <strong
                 className={cn(
                   'text-2xl tracking-[-1px] text-white',
-                  !areValuesVisible && 'blur-md',
+                  !areValuesVisible && 'blur-md select-none',
                 )}
               >
                 {formatCurrency(currentBalance)}
