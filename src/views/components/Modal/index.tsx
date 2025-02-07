@@ -1,20 +1,21 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/views/components/ui/dialog.tsx';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { ReactNode } from 'react';
 
 interface ModalProps {
   open: boolean;
   onClose?: () => void;
   title: string;
-  children: React.ReactNode;
-  rightAction?: React.ReactNode;
-  trigger?: React.ReactNode;
+  children: ReactNode;
+  rightAction?: ReactNode;
+  trigger?: ReactNode;
 }
 
 export function Modal({ open, children, onClose, title, rightAction, trigger }: ModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       {trigger}
-      <DialogContent className="max-w-[30%]">
+      <DialogContent className="rounded-2xl max-w-[90%] md:max-w-[30%]">
         <DialogHeader className="h-12 flex flex-row items-center justify-between text-gray-800">
           <button
             type="button"

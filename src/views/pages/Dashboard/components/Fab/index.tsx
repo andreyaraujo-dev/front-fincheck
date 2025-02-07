@@ -19,7 +19,7 @@ export function Fab() {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger
         className={cn(
-          'fixed bottom-4 right-4 rounded-full text-white bg-teal-900 w-12 h-12 flex items-center justify-center transition-all outline-none',
+          'fixed z-[999] bottom-4 right-4 rounded-full text-white bg-teal-900 w-12 h-12 flex items-center justify-center transition-all outline-none',
           open && 'rotate-45',
         )}
       >

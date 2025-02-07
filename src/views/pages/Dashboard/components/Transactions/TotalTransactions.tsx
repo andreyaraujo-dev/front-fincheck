@@ -16,7 +16,7 @@ export function TotalTransactions({
   totalIncome,
 }: TotalTransactionsProps) {
   return (
-    <div className="p-2 flex items-center justify-end gap-2">
+    <div className="p-2 flex items-center justify-start md:justify-end gap-2">
       {!filtersType ? (
         <div className={cn('flex items-center gap-1', !areValuesVisible && 'blur-sm select-none')}>
           <div className="w-max text-xs font-medium text-teal-900 flex gap-1">
